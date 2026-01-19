@@ -1,16 +1,16 @@
 public class TaskList {
-    private String[] tasks;
+    private Task[] tasks;
     private int taskCount;
     private static final int MAX_TASKS = 100;
 
     public TaskList() {
-        this.tasks = new String[MAX_TASKS];
+        this.tasks = new Task[MAX_TASKS];
         this.taskCount = 0;
     }
 
-    public void addTask(String task) {
+    public void addTask(String description) {
         if (taskCount < MAX_TASKS) {
-            tasks[taskCount] = task;
+            tasks[taskCount] = new Task(description);
             taskCount++;
         }
     }
@@ -19,18 +19,22 @@ public class TaskList {
         return taskCount;
     }
 
-    public String getTask(int index) {
+    public Task getTask(int index) {
         if (index >= 0 && index < taskCount) {
             return tasks[index];
         }
         return null;
     }
 
-    public String[] getAllTasks() {
-        String[] result = new String[taskCount];
-        for (int i = 0; i < taskCount; i++) {
-            result[i] = tasks[i];
+    public void markTask(int index) {
+        if (index >= 0 && index < taskCount) {
+            tasks[index].markAsDone();
         }
-        return result;
+    }
+
+    public void unmarkTask(int index) {
+        if (index >= 0 && index < taskCount) {
+            tasks[index].markAsNotDone();
+        }
     }
 }

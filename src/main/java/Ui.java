@@ -35,10 +35,18 @@ public class Ui {
     }
 
     public void showList(TaskList tasks) {
-        System.out.print(DIVIDER);
+        System.out.print(DIVIDER + "Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.getTaskCount(); i++) {
-            System.out.println((i + 1) + ". " + tasks.getTask(i));
+            System.out.println((i + 1) + "." + tasks.getTask(i));
         }
         System.out.println(DIVIDER);
+    }
+
+    public void showTaskMarked(Task task) {
+        System.out.println(DIVIDER + "Nice! I've marked this task as done:\n  " + task + "\n" + DIVIDER);
+    }
+
+    public void showTaskUnmarked(Task task) {
+        System.out.println(DIVIDER + "OK, I've marked this task as not done yet:\n  " + task + "\n" + DIVIDER);
     }
 }
