@@ -19,21 +19,7 @@ public class Hal {
             isExit = parser.isExit(input);
             
             if (!isExit) {
-                String lowerInput = input.toLowerCase();
-                if (lowerInput.equals("list")) {
-                    ui.showList(tasks);
-                } else if (lowerInput.startsWith("mark ")) {
-                    int taskIndex = Integer.parseInt(input.substring(5)) - 1;
-                    tasks.markTask(taskIndex);
-                    ui.showTaskMarked(tasks.getTask(taskIndex));
-                } else if (lowerInput.startsWith("unmark ")) {
-                    int taskIndex = Integer.parseInt(input.substring(7)) - 1;
-                    tasks.unmarkTask(taskIndex);
-                    ui.showTaskUnmarked(tasks.getTask(taskIndex));
-                } else {
-                    tasks.addTask(input);
-                    ui.showTaskAdded(input);
-                }
+                parser.processCommand(input, tasks, ui);
             } else {
                 ui.goodbye();
             }

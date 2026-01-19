@@ -30,8 +30,9 @@ public class Ui {
         System.out.println(Ui.DIVIDER + "Bye. Hope to see you again soon!\n" + Ui.DIVIDER);
     }
 
-    public void showTaskAdded(String task) {
-        System.out.println(DIVIDER + "added: " + task + "\n" + DIVIDER);
+    public void showTaskAdded(Task task, int totalTasks) {
+        System.out.println(DIVIDER + "Got it. I've added this task:\n  " + task 
+                + "\nNow you have " + totalTasks + " tasks in the list.\n" + DIVIDER);
     }
 
     public void showList(TaskList tasks) {

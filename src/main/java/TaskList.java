@@ -8,9 +8,9 @@ public class TaskList {
         this.taskCount = 0;
     }
 
-    public void addTask(String description) {
+    public void addTask(Task task) {
         if (taskCount < MAX_TASKS) {
-            tasks[taskCount] = new Task(description);
+            tasks[taskCount] = task;
             taskCount++;
         }
     }
