@@ -1,36 +1,38 @@
-import java.util.Scanner;
-
 public class Hal {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String logo = """
-                                           .---.\s
-                       .                   |   |\s
-                     .'|                   |   |\s
-                    <  |                   |   |\s
-                     | |             __    |   |\s
-                     | | .'''-.   .:--.'.  |   |\s
-                     | |/.'''. | / |   | | |   |\s
-                     |  /    | | `' __ | | |   |\s
-                     | |     | |  .'.''| | |   |\s
-                     | |     | | / /   | |_'---'\s
-                     | '.    | '.| |._,| '/     \s
-                     '---'   '---'`--'  `'      \s
-                """;
-        String divider = "____________________________________________________________\n";
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+    private Parser parser;
 
-        System.out.println(divider
-                + logo
-                + "Hello! I'm Hal\nWhat can I do for you?\n"
-                + divider);
+    public Hal() {
+        ui = new Ui();
+        storage = new Storage();
+        tasks = new TaskList();
+        parser = new Parser();
+    }
 
-        String input = scanner.nextLine();
-
-        while (!input.equalsIgnoreCase("bye")) {
-            System.out.println(divider + input + "\n" + divider);
-            input = scanner.nextLine();
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            String input = parser.readCommand();
+            isExit = parser.isExit(input);
+            
+            if (!isExit) {
+                if (input.equalsIgnoreCase("list")) {
+                    ui.showList(tasks);
+                } else {
+                    tasks.addTask(input);
+                    ui.showTaskAdded(input);
+                }
+            } else {
+                ui.goodbye();
+            }
         }
+        parser.close();
+    }
 
-        System.out.println(divider + "Bye. Hope to see you again soon!\n" + divider);
+    public static void main(String[] args) {
+        new Hal().run();
     }
 }

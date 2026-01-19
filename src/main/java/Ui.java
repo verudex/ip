@@ -1,0 +1,44 @@
+public class Ui {
+    public static final String LOGO = """
+                                           .---.\s
+                       .                   |   |\s
+                     .'|                   |   |\s
+                    <  |                   |   |\s
+                     | |             __    |   |\s
+                     | | .'''-.   .:--.'.  |   |\s
+                     | |/.'''. | / |   | | |   |\s
+                     |  /    | | `' __ | | |   |\s
+                     | |     | |  .'.''| | |   |\s
+                     | |     | | / /   | |_'---'\s
+                     | '.    | '.| |._,| '/     \s
+                     '---'   '---'`--'  `'      \s
+                """;
+    public static final String DIVIDER = "____________________________________________________________\n";
+
+    public void showWelcome() {
+        System.out.println(DIVIDER
+                + LOGO
+                + "Hello! I'm Hal\nWhat can I do for you?\n"
+                + DIVIDER);
+    }
+
+    public void echo(String input) {
+        System.out.println(Ui.DIVIDER + input + "\n" + Ui.DIVIDER);
+    }
+
+    public void goodbye() {
+        System.out.println(Ui.DIVIDER + "Bye. Hope to see you again soon!\n" + Ui.DIVIDER);
+    }
+
+    public void showTaskAdded(String task) {
+        System.out.println(DIVIDER + "added: " + task + "\n" + DIVIDER);
+    }
+
+    public void showList(TaskList tasks) {
+        System.out.print(DIVIDER);
+        for (int i = 0; i < tasks.getTaskCount(); i++) {
+            System.out.println((i + 1) + ". " + tasks.getTask(i));
+        }
+        System.out.println(DIVIDER);
+    }
+}
