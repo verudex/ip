@@ -17,7 +17,6 @@ public class Ui {
 
     public void showWelcome() {
         System.out.println(DIVIDER
-                + LOGO
                 + "Hello! I'm Hal\nWhat can I do for you?\n"
                 + DIVIDER);
     }
