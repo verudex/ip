@@ -6,4 +6,23 @@ mark 2
 list
 unmark 2
 list
+delete 3
+list
+delete
+delete abc
+delete 100
+todo
+deadline
+deadline submit assignment
+deadline hello /by
+event
+event party /from
+event party /from today /to
+mark
+unmark
+mark abc
+mark 100
+todo1
+deadline1
+blah
 bye

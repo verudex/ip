@@ -50,6 +50,11 @@ public class Ui {
         System.out.println(DIVIDER + "OK, I've marked this task as not done yet:\n  " + task + "\n" + DIVIDER);
     }
 
+    public void showTaskDeleted(Task task, int totalTasks) {
+        System.out.println(DIVIDER + "Noted. I've removed this task:\n  " + task
+                + "\nNow you have " + totalTasks + " tasks in the list.\n" + DIVIDER);
+    }
+
     public void showError(String errorMessage) {
         System.out.println(DIVIDER + errorMessage + "\n" + DIVIDER);
     }

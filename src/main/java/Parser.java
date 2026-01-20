@@ -50,6 +50,21 @@ public class Parser {
             } catch (NumberFormatException e) {
                 throw new HalException("Error: Invalid task number!");
             }
+        } else if (lowerInput.startsWith("delete") && (lowerInput.length() == 6 || lowerInput.charAt(6) == ' ')) {
+            String indexStr = input.trim().substring(6).trim();
+            if (indexStr.isEmpty()) {
+                throw new HalException("Error: Task number is required for the delete command!");
+            }
+            try {
+                int taskIndex = Integer.parseInt(indexStr) - 1;
+                if (taskIndex < 0 || taskIndex >= tasks.getTaskCount()) {
+                    throw new HalException("Error: Task number is out of range of task list!");
+                }
+                Task deletedTask = tasks.deleteTask(taskIndex);
+                ui.showTaskDeleted(deletedTask, tasks.getTaskCount());
+            } catch (NumberFormatException e) {
+                throw new HalException("Error: Invalid task number!");
+            }
         } else if (lowerInput.startsWith("todo") && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
             String description = input.trim().substring(4).trim();
             if (description.isEmpty()) {
