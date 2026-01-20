@@ -4,12 +4,16 @@ public class Hal {
     private Ui ui;
     private Parser parser;
 
-    public Hal() {
+    public Hal(String filePath) {
         ui = new Ui();
-        storage = new Storage();
+        storage = new Storage(filePath);
         tasks = new TaskList();
         parser = new Parser();
         loadTasks();
+    }
+
+    public Hal() {
+        this("./data/hal.txt");
     }
 
     private void loadTasks() {
@@ -51,6 +55,7 @@ public class Hal {
     }
 
     public static void main(String[] args) {
-        new Hal().run();
+        String filePath = args.length > 0 ? args[0] : "./data/hal.txt";
+        new Hal(filePath).run();
     }
 }
