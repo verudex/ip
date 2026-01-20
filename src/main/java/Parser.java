@@ -151,10 +151,14 @@ public class Parser {
         if (by.isEmpty()) {
             throw new HalException("Error: Deadline time cannot be empty!");
         }
-        Task task = new Deadline(description, by);
-        tasks.addTask(task);
-        ui.showTaskAdded(task, tasks.getTaskCount());
-        storage.save(tasks.getAllTasks());
+        try {
+            Task task = new Deadline(description, by);
+            tasks.addTask(task);
+            ui.showTaskAdded(task, tasks.getTaskCount());
+            storage.save(tasks.getAllTasks());
+        } catch (Exception e) {
+            throw new HalException("Error: Invalid date format! Please use dd/MM/yyyy HHmm format (e.g. 15/10/2019 1800).");
+        }
     }
 
     private void handleEventCommand(String input, TaskList tasks, Ui ui, Storage storage) {
@@ -176,10 +180,14 @@ public class Parser {
         if (from.isEmpty() || to.isEmpty()) {
             throw new HalException("Error: Event time cannot be empty!");
         }
-        Task task = new Event(description, from, to);
-        tasks.addTask(task);
-        ui.showTaskAdded(task, tasks.getTaskCount());
-        storage.save(tasks.getAllTasks());
+        try {
+            Task task = new Event(description, from, to);
+            tasks.addTask(task);
+            ui.showTaskAdded(task, tasks.getTaskCount());
+            storage.save(tasks.getAllTasks());
+        } catch (Exception e) {
+            throw new HalException("Error: Invalid date/time format! Please use dd/MM/yyyy HHmm format (e.g. 15/10/2019 1800).");
+        }
     }
 
     public void close() {

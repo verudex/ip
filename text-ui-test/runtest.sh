@@ -12,6 +12,16 @@ then
     rm ACTUAL.TXT
 fi
 
+# delete data file from previous run
+if [ -e "./data/hal.txt" ]
+then
+    rm ./data/hal.txt
+fi
+if [ -e "../data/hal.txt" ]
+then
+    rm ../data/hal.txt
+fi
+
 # compile the code into the bin folder, terminates if error occurred
 if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
 then

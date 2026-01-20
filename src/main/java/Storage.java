@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -54,20 +55,24 @@ public class Storage {
         String description = parts[2];
 
         Task task = null;
-        switch (type) {
-        case "T":
-            task = new Todo(description);
-            break;
-        case "D":
-            if (parts.length >= 4) {
-                task = new Deadline(description, parts[3]);
+        try {
+            switch (type) {
+            case "T":
+                task = new Todo(description);
+                break;
+            case "D":
+                if (parts.length >= 4) {
+                    task = new Deadline(description, LocalDateTime.parse(parts[3]));
+                }
+                break;
+            case "E":
+                if (parts.length >= 5) {
+                    task = new Event(description, LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
+                }
+                break;
             }
-            break;
-        case "E":
-            if (parts.length >= 5) {
-                task = new Event(description, parts[3], parts[4]);
-            }
-            break;
+        } catch (Exception e) {
+            return null;
         }
 
         if (task != null && isDone) {
