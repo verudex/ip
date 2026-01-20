@@ -49,4 +49,8 @@ public class Ui {
     public void showTaskUnmarked(Task task) {
         System.out.println(DIVIDER + "OK, I've marked this task as not done yet:\n  " + task + "\n" + DIVIDER);
     }
+
+    public void showError(String errorMessage) {
+        System.out.println(DIVIDER + errorMessage + "\n" + DIVIDER);
+    }
 }

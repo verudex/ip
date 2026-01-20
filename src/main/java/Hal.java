@@ -19,7 +19,11 @@ public class Hal {
             isExit = parser.isExit(input);
             
             if (!isExit) {
-                parser.processCommand(input, tasks, ui);
+                try {
+                    parser.processCommand(input, tasks, ui);
+                } catch (HalException e) {
+                    ui.showError(e.getMessage());
+                }
             } else {
                 ui.goodbye();
             }
