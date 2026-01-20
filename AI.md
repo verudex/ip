@@ -1,0 +1,2 @@
+INCREMENT : AI USAGE
+A-Enums : Used Claude AI to refactor my code to include the usage of enums for TaskType and Command Type. Saved a lot of time in refactoring the original code in Parser.java, since the logic is still the same as before, just that now the processing of each command type is split into its own respective method.

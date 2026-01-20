@@ -1,10 +1,22 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected TaskType taskType;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.taskType = null;
+    }
+
+    public Task(String description, TaskType taskType) {
+        this.description = description;
+        this.isDone = false;
+        this.taskType = taskType;
+    }
+
+    public TaskType getTaskType() {
+        return taskType;
     }
 
     public String getStatusIcon() {
