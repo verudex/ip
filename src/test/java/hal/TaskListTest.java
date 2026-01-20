@@ -3,6 +3,8 @@ package hal;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -152,5 +154,85 @@ public class TaskListTest {
         assertEquals(2, taskList.getAllTasks().size());
         assertTrue(taskList.getAllTasks().contains(task1));
         assertTrue(taskList.getAllTasks().contains(task2));
+    }
+
+    @Test
+    public void findTasks_matchingKeyword_returnsMatchingTasks() {
+        Task bookTask1 = new Todo("read book");
+        Task bookTask2 = new Deadline("return book", "25/01/2026 2359");
+        Task groceryTask = new Todo("buy groceries");
+        taskList.addTask(bookTask1);
+        taskList.addTask(bookTask2);
+        taskList.addTask(groceryTask);
+        
+        ArrayList<Task> foundTasks = taskList.findTasks("book");
+        assertEquals(2, foundTasks.size());
+        assertTrue(foundTasks.contains(bookTask1));
+        assertTrue(foundTasks.contains(bookTask2));
+    }
+
+    @Test
+    public void findTasks_noMatch_returnsEmptyList() {
+        taskList.addTask(task1);
+        taskList.addTask(task2);
+        
+        ArrayList<Task> foundTasks = taskList.findTasks("meeting");
+        assertEquals(0, foundTasks.size());
+    }
+
+    @Test
+    public void findTasks_caseInsensitive_returnsMatches() {
+        Task upperTask = new Todo("Buy BOOK");
+        Task lowerTask = new Todo("read book");
+        Task mixedTask = new Todo("Book review");
+        taskList.addTask(upperTask);
+        taskList.addTask(lowerTask);
+        taskList.addTask(mixedTask);
+        
+        ArrayList<Task> foundTasks = taskList.findTasks("BOOK");
+        assertEquals(3, foundTasks.size());
+        
+        ArrayList<Task> foundTasksLower = taskList.findTasks("book");
+        assertEquals(3, foundTasksLower.size());
+    }
+
+    @Test
+    public void findTasks_partialMatch_returnsMatches() {
+        Task task = new Todo("reading books");
+        taskList.addTask(task);
+        
+        ArrayList<Task> foundTasks = taskList.findTasks("read");
+        assertEquals(1, foundTasks.size());
+        assertEquals(task, foundTasks.get(0));
+    }
+
+    @Test
+    public void findTasks_emptyList_returnsEmptyList() {
+        ArrayList<Task> foundTasks = taskList.findTasks("book");
+        assertEquals(0, foundTasks.size());
+    }
+
+    @Test
+    public void findTasks_singleMatch_returnsSingleTask() {
+        taskList.addTask(task1);
+        taskList.addTask(task2);
+        taskList.addTask(task3);
+        
+        ArrayList<Task> foundTasks = taskList.findTasks("report");
+        assertEquals(1, foundTasks.size());
+        assertEquals(task3, foundTasks.get(0));
+    }
+
+    @Test
+    public void findTasks_allTasksMatch_returnsAllTasks() {
+        Task task1 = new Todo("task one");
+        Task task2 = new Todo("task two");
+        Task task3 = new Todo("task three");
+        taskList.addTask(task1);
+        taskList.addTask(task2);
+        taskList.addTask(task3);
+        
+        ArrayList<Task> foundTasks = taskList.findTasks("task");
+        assertEquals(3, foundTasks.size());
     }
 }
