@@ -1,8 +1,8 @@
 todo borrow book
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
+deadline return book /by 15/12/2024 1800
+event project meeting /from 12/10/2024 1400 /to 12/10/2024 1600
 todo read textbook
-deadline submit report /by Friday
+deadline submit report /by 30/11/2024 2359
 list
 mark 2
 mark 4
@@ -14,6 +14,9 @@ list
 mark 1
 mark 3
 list
+deadline homework /by 01/12/2024 1200
+event conference /from 20/11/2024 0900 /to 20/11/2024 1700
+list
 delete
 delete abc
 delete 100
@@ -21,9 +24,11 @@ todo
 deadline
 deadline submit assignment
 deadline hello /by
+deadline invalid date /by notadate
 event
 event party /from
 event party /from today /to
+event invalid /from baddate /to alsobad
 mark
 unmark
 mark abc
