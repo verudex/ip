@@ -40,4 +40,8 @@ public class TaskList {
         }
         return null;
     }
+
+    public ArrayList<Task> getAllTasks() {
+        return tasks;
+    }
 }

@@ -9,6 +9,25 @@ public class Hal {
         storage = new Storage();
         tasks = new TaskList();
         parser = new Parser();
+        loadTasks();
+    }
+
+    private void loadTasks() {
+        try {
+            for (Task task : storage.load()) {
+                tasks.addTask(task);
+            }
+        } catch (HalException e) {
+            ui.showError(e.getMessage());
+        }
+    }
+
+    private void saveTasks() {
+        try {
+            storage.save(tasks.getAllTasks());
+        } catch (HalException e) {
+            ui.showError(e.getMessage());
+        }
     }
 
     public void run() {
@@ -20,7 +39,7 @@ public class Hal {
             
             if (!isExit) {
                 try {
-                    parser.processCommand(input, tasks, ui);
+                    parser.processCommand(input, tasks, ui, storage);
                 } catch (HalException e) {
                     ui.showError(e.getMessage());
                 }

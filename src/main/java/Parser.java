@@ -39,7 +39,7 @@ public class Parser {
         }
     }
 
-    public void processCommand(String input, TaskList tasks, Ui ui) {
+    public void processCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         Command command = parseCommand(input);
         
         switch (command) {
@@ -47,29 +47,29 @@ public class Parser {
             ui.showList(tasks);
             break;
         case MARK:
-            handleMarkCommand(input, tasks, ui);
+            handleMarkCommand(input, tasks, ui, storage);
             break;
         case UNMARK:
-            handleUnmarkCommand(input, tasks, ui);
+            handleUnmarkCommand(input, tasks, ui, storage);
             break;
         case DELETE:
-            handleDeleteCommand(input, tasks, ui);
+            handleDeleteCommand(input, tasks, ui, storage);
             break;
         case TODO:
-            handleTodoCommand(input, tasks, ui);
+            handleTodoCommand(input, tasks, ui, storage);
             break;
         case DEADLINE:
-            handleDeadlineCommand(input, tasks, ui);
+            handleDeadlineCommand(input, tasks, ui, storage);
             break;
         case EVENT:
-            handleEventCommand(input, tasks, ui);
+            handleEventCommand(input, tasks, ui, storage);
             break;
         default:
             throw new HalException("Error: Please use a valid command!");
         }
     }
 
-    private void handleMarkCommand(String input, TaskList tasks, Ui ui) {
+    private void handleMarkCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         String indexStr = input.trim().substring(4).trim();
         if (indexStr.isEmpty()) {
             throw new HalException("Error: Task number is required for the mark command!");
@@ -81,12 +81,13 @@ public class Parser {
             }
             tasks.markTask(taskIndex);
             ui.showTaskMarked(tasks.getTask(taskIndex));
+            storage.save(tasks.getAllTasks());
         } catch (NumberFormatException e) {
             throw new HalException("Error: Invalid task number!");
         }
     }
 
-    private void handleUnmarkCommand(String input, TaskList tasks, Ui ui) {
+    private void handleUnmarkCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         String indexStr = input.trim().substring(6).trim();
         if (indexStr.isEmpty()) {
             throw new HalException("Error: Task number is required for the unmark command!");
@@ -98,12 +99,13 @@ public class Parser {
             }
             tasks.unmarkTask(taskIndex);
             ui.showTaskUnmarked(tasks.getTask(taskIndex));
+            storage.save(tasks.getAllTasks());
         } catch (NumberFormatException e) {
             throw new HalException("Error: Invalid task number!");
         }
     }
 
-    private void handleDeleteCommand(String input, TaskList tasks, Ui ui) {
+    private void handleDeleteCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         String indexStr = input.trim().substring(6).trim();
         if (indexStr.isEmpty()) {
             throw new HalException("Error: Task number is required for the delete command!");
@@ -115,12 +117,13 @@ public class Parser {
             }
             Task deletedTask = tasks.deleteTask(taskIndex);
             ui.showTaskDeleted(deletedTask, tasks.getTaskCount());
+            storage.save(tasks.getAllTasks());
         } catch (NumberFormatException e) {
             throw new HalException("Error: Invalid task number!");
         }
     }
 
-    private void handleTodoCommand(String input, TaskList tasks, Ui ui) {
+    private void handleTodoCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         String description = input.trim().substring(4).trim();
         if (description.isEmpty()) {
             throw new HalException("Error: Todo description cannot be empty!");
@@ -128,9 +131,10 @@ public class Parser {
         Task task = new Todo(description);
         tasks.addTask(task);
         ui.showTaskAdded(task, tasks.getTaskCount());
+        storage.save(tasks.getAllTasks());
     }
 
-    private void handleDeadlineCommand(String input, TaskList tasks, Ui ui) {
+    private void handleDeadlineCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         String details = input.trim().substring(8).trim();
         if (details.isEmpty()) {
             throw new HalException("Error: Deadline description cannot be empty!");
@@ -150,9 +154,10 @@ public class Parser {
         Task task = new Deadline(description, by);
         tasks.addTask(task);
         ui.showTaskAdded(task, tasks.getTaskCount());
+        storage.save(tasks.getAllTasks());
     }
 
-    private void handleEventCommand(String input, TaskList tasks, Ui ui) {
+    private void handleEventCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         String details = input.trim().substring(5).trim();
         if (details.isEmpty()) {
             throw new HalException("Error: Event description cannot be empty!");
@@ -174,6 +179,7 @@ public class Parser {
         Task task = new Event(description, from, to);
         tasks.addTask(task);
         ui.showTaskAdded(task, tasks.getTaskCount());
+        storage.save(tasks.getAllTasks());
     }
 
     public void close() {
