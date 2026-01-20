@@ -1,0 +1,6 @@
+T | 1 | borrow book
+D | 0 | return book | 2024-12-15T18:00
+T | 1 | read textbook
+D | 0 | submit report | 2024-11-30T23:59
+D | 0 | homework | 2024-12-01T12:00
+E | 0 | conference | 2024-11-20T09:00 | 2024-11-20T17:00

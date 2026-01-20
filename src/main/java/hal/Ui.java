@@ -1,3 +1,5 @@
+package hal;
+
 public class Ui {
     public static final String LOGO = """
                                            .---.\s

@@ -1,3 +1,5 @@
+package hal;
+
 public class Hal {
     private Storage storage;
     private TaskList tasks;

@@ -1,3 +1,5 @@
+package hal;
+
 public enum Command {
     LIST,
     MARK,
