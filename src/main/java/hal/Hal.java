@@ -1,11 +1,19 @@
 package hal;
 
+/**
+ * Main class for the Hal task manager application.
+ */
 public class Hal {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
     private Parser parser;
 
+    /**
+     * Constructs a Hal application with the specified file path.
+     *
+     * @param filePath The path to the storage file.
+     */
     public Hal(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -14,6 +22,9 @@ public class Hal {
         loadTasks();
     }
 
+    /**
+     * Constructs a Hal application with the default file path.
+     */
     public Hal() {
         this("./data/hal.txt");
     }
@@ -36,6 +47,9 @@ public class Hal {
         }
     }
 
+    /**
+     * Runs the main application loop.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;

@@ -10,17 +10,34 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading and saving of tasks to a file.
+ */
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a Storage with the default file path.
+     */
     public Storage() {
         this.filePath = "./data/hal.txt";
     }
 
+    /**
+     * Constructs a Storage with the specified file path.
+     *
+     * @param filePath The path to the storage file.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return The list of loaded tasks.
+     * @throws HalException If the file cannot be loaded.
+     */
     public ArrayList<Task> load() throws HalException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -84,6 +101,12 @@ public class Storage {
         return task;
     }
 
+    /**
+     * Saves tasks to the storage file.
+     *
+     * @param tasks The list of tasks to save.
+     * @throws HalException If the file cannot be saved.
+     */
     public void save(ArrayList<Task> tasks) throws HalException {
         try {
             File file = new File(filePath);

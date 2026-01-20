@@ -2,17 +2,34 @@ package hal;
 
 import java.util.Scanner;
 
+/**
+ * Handles parsing and processing of user commands.
+ */
 public class Parser {
     private Scanner scanner;
 
+    /**
+     * Constructs a Parser with a scanner for reading input.
+     */
     public Parser() {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Reads a command from the user.
+     *
+     * @return The user input string.
+     */
     public String readCommand() {
         return scanner.nextLine();
     }
 
+    /**
+     * Checks if the input is an exit command.
+     *
+     * @param input The user input.
+     * @return True if the input is "bye", false otherwise.
+     */
     public boolean isExit(String input) {
         return input.equalsIgnoreCase("bye");
     }
@@ -41,6 +58,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Processes a user command and executes the corresponding action.
+     *
+     * @param input The user input string.
+     * @param tasks The task list to operate on.
+     * @param ui The UI for displaying messages.
+     * @param storage The storage for saving tasks.
+     */
     public void processCommand(String input, TaskList tasks, Ui ui, Storage storage) {
         Command command = parseCommand(input);
         
@@ -192,6 +217,9 @@ public class Parser {
         }
     }
 
+    /**
+     * Closes the scanner and releases resources.
+     */
     public void close() {
         scanner.close();
     }
