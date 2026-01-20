@@ -64,7 +64,7 @@ public class Ui {
     public void showList(TaskList tasks) {
         System.out.print(DIVIDER + "Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.getTaskCount(); i++) {
-            System.out.println((i + 1) + "." + tasks.getTask(i));
+            System.out.println((i + 1) + ". " + tasks.getTask(i));
         }
         System.out.println(DIVIDER);
     }
