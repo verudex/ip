@@ -1,5 +1,7 @@
 package hal;
 
+import java.util.ArrayList;
+
 /**
  * Handles all user interface interactions.
  */
@@ -105,5 +107,22 @@ public class Ui {
      */
     public void showError(String errorMessage) {
         System.out.println(DIVIDER + errorMessage + "\n" + DIVIDER);
+    }
+
+    /**
+     * Displays the list of tasks found by search.
+     *
+     * @param tasks The list of found tasks.
+     */
+    public void showFoundTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println(DIVIDER + "No matching tasks found.\n" + DIVIDER);
+        } else {
+            System.out.print(DIVIDER + "Here are the matching tasks in your list:\n");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i + 1) + ". " + tasks.get(i));
+            }
+            System.out.println(DIVIDER);
+        }
     }
 }

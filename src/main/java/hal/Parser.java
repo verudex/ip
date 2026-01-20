@@ -1,5 +1,6 @@
 package hal;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -57,6 +58,8 @@ public class Parser {
         } else if (lowerInput.startsWith("event")
                 && (lowerInput.length() == 5 || lowerInput.charAt(5) == ' ')) {
             return Command.EVENT;
+        } else if (lowerInput.startsWith("find") && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
+            return Command.FIND;
         } else if (lowerInput.equals("bye")) {
             return Command.BYE;
         } else {
@@ -96,6 +99,9 @@ public class Parser {
             break;
         case EVENT:
             handleEventCommand(input, tasks, ui, storage);
+            break;
+        case FIND:
+            handleFindCommand(input, tasks, ui);
             break;
         default:
             throw new HalException("Error: Please use a valid command!");
@@ -223,6 +229,15 @@ public class Parser {
             throw new HalException("Error: Invalid date/time format! "
                     + "Please use dd/MM/yyyy HHmm format (e.g. 15/10/2019 1800).");
         }
+    }
+
+    private void handleFindCommand(String input, TaskList tasks, Ui ui) {
+        String keyword = input.trim().substring(4).trim();
+        if (keyword.isEmpty()) {
+            throw new HalException("Error: Please provide a keyword to search for!");
+        }
+        ArrayList<Task> foundTasks = tasks.findTasks(keyword);
+        ui.showFoundTasks(foundTasks);
     }
 
     /**
