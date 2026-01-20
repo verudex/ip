@@ -22,17 +22,23 @@ public class Parser {
         
         if (lowerInput.equals("list")) {
             return Command.LIST;
-        } else if (lowerInput.startsWith("mark") && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
+        } else if (lowerInput.startsWith("mark")
+                && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
             return Command.MARK;
-        } else if (lowerInput.startsWith("unmark") && (lowerInput.length() == 6 || lowerInput.charAt(6) == ' ')) {
+        } else if (lowerInput.startsWith("unmark")
+                && (lowerInput.length() == 6 || lowerInput.charAt(6) == ' ')) {
             return Command.UNMARK;
-        } else if (lowerInput.startsWith("delete") && (lowerInput.length() == 6 || lowerInput.charAt(6) == ' ')) {
+        } else if (lowerInput.startsWith("delete")
+                && (lowerInput.length() == 6 || lowerInput.charAt(6) == ' ')) {
             return Command.DELETE;
-        } else if (lowerInput.startsWith("todo") && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
+        } else if (lowerInput.startsWith("todo")
+                && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
             return Command.TODO;
-        } else if (lowerInput.startsWith("deadline") && (lowerInput.length() == 8 || lowerInput.charAt(8) == ' ')) {
+        } else if (lowerInput.startsWith("deadline")
+                && (lowerInput.length() == 8 || lowerInput.charAt(8) == ' ')) {
             return Command.DEADLINE;
-        } else if (lowerInput.startsWith("event") && (lowerInput.length() == 5 || lowerInput.charAt(5) == ' ')) {
+        } else if (lowerInput.startsWith("event")
+                && (lowerInput.length() == 5 || lowerInput.charAt(5) == ' ')) {
             return Command.EVENT;
         } else if (lowerInput.equals("bye")) {
             return Command.BYE;
@@ -159,7 +165,8 @@ public class Parser {
             ui.showTaskAdded(task, tasks.getTaskCount());
             storage.save(tasks.getAllTasks());
         } catch (Exception e) {
-            throw new HalException("Error: Invalid date format! Please use dd/MM/yyyy HHmm format (e.g. 15/10/2019 1800).");
+            throw new HalException("Error: Invalid date format! "
+                    + "Please use dd/MM/yyyy HHmm format (e.g. 15/10/2019 1800).");
         }
     }
 
@@ -188,7 +195,8 @@ public class Parser {
             ui.showTaskAdded(task, tasks.getTaskCount());
             storage.save(tasks.getAllTasks());
         } catch (Exception e) {
-            throw new HalException("Error: Invalid date/time format! Please use dd/MM/yyyy HHmm format (e.g. 15/10/2019 1800).");
+            throw new HalException("Error: Invalid date/time format! "
+                    + "Please use dd/MM/yyyy HHmm format (e.g. 15/10/2019 1800).");
         }
     }
 
