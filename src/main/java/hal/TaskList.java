@@ -25,6 +25,17 @@ public class TaskList {
     }
 
     /**
+     * Adds multiple tasks to the list.
+     *
+     * @param tasksToAdd The tasks to add.
+     */
+    public void addTasks(Task... tasksToAdd) {
+        for (Task task : tasksToAdd) {
+            tasks.add(task);
+        }
+    }
+
+    /**
      * Returns the number of tasks in the list.
      *
      * @return The task count.

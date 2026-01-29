@@ -98,10 +98,10 @@ public class Storage {
     /**
      * Saves tasks to the storage file.
      *
-     * @param tasks The list of tasks to save.
+     * @param tasks The tasks to save (can be an ArrayList or individual tasks).
      * @throws HalException If the file cannot be saved.
      */
-    public void save(ArrayList<Task> tasks) throws HalException {
+    public void save(Task... tasks) throws HalException {
         try {
             File file = new File(filePath);
             File directory = file.getParentFile();
@@ -118,5 +118,15 @@ public class Storage {
         } catch (IOException e) {
             throw new HalException("Error: Could not save data to file!");
         }
+    }
+
+    /**
+     * Saves tasks from an ArrayList to the storage file.
+     *
+     * @param taskList The list of tasks to save.
+     * @throws HalException If the file cannot be saved.
+     */
+    public void save(ArrayList<Task> taskList) throws HalException {
+        save(taskList.toArray(new Task[0]));
     }
 }

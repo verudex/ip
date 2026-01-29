@@ -3,3 +3,4 @@ A-Enums : Used Claude AI to refactor my code to include the usage of enums for T
 A-JUnit : Used Claude AI to generate JUnit tests for my chatbot by prompting what features need to be tested and what loopholes could possibly be exploited by the user.
 A-JavaDoc : Used Claude AI to generate JavaDoc comments for non-private classes/methods.
 Level-10 : Used Claude AI to copy over and repurpose code from parser.java to work with the new GUI I/O instead. Also, used Claude AI to implement the "close GUI upon user input of 'Bye'" functionality.
+A-Varargs : Used Claude AI to add Javadoc comments to suitable public class methods.

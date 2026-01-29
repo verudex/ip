@@ -31,6 +31,11 @@ public class Ui {
                 + DIVIDER);
     }
 
+    /**
+     * Returns the welcome message.
+     *
+     * @return The welcome message string.
+     */
     public String getWelcome() {
         return "Hello! I'm Hal\nWhat can I do for you?\n";
     }
@@ -51,6 +56,11 @@ public class Ui {
         System.out.println(Ui.DIVIDER + "Bye. Hope to see you again soon!\n" + Ui.DIVIDER);
     }
 
+    /**
+     * Returns the goodbye message.
+     *
+     * @return The goodbye message string.
+     */
     public String getGoodbye() {
         return "Bye. Hope to see you again soon!";
     }
@@ -66,6 +76,13 @@ public class Ui {
                 + "\nNow you have " + totalTasks + " tasks in the list.\n" + DIVIDER);
     }
 
+    /**
+     * Returns a message confirming that a task was added.
+     *
+     * @param task The task that was added.
+     * @param totalTasks The total number of tasks.
+     * @return The task added confirmation message.
+     */
     public String getTaskAdded(Task task, int totalTasks) {
         return "Got it. I've added this task:\n  " + task 
                 + "\nNow you have " + totalTasks + " tasks in the list.";
@@ -84,6 +101,12 @@ public class Ui {
         System.out.println(DIVIDER);
     }
 
+    /**
+     * Returns the list of tasks as a formatted string.
+     *
+     * @param tasks The task list to format.
+     * @return The formatted task list string.
+     */
     public String getList(TaskList tasks) {
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.getTaskCount(); i++) {
@@ -101,6 +124,12 @@ public class Ui {
         System.out.println(DIVIDER + "Nice! I've marked this task as done:\n  " + task + "\n" + DIVIDER);
     }
 
+    /**
+     * Returns a message confirming that a task was marked as done.
+     *
+     * @param task The task that was marked.
+     * @return The task marked confirmation message.
+     */
     public String getTaskMarked(Task task) {
         return "Nice! I've marked this task as done:\n  " + task;
     }
@@ -114,6 +143,12 @@ public class Ui {
         System.out.println(DIVIDER + "OK, I've marked this task as not done yet:\n  " + task + "\n" + DIVIDER);
     }
 
+    /**
+     * Returns a message confirming that a task was unmarked.
+     *
+     * @param task The task that was unmarked.
+     * @return The task unmarked confirmation message.
+     */
     public String getTaskUnmarked(Task task) {
         return "OK, I've marked this task as not done yet:\n  " + task;
     }
@@ -129,6 +164,13 @@ public class Ui {
                 + "\nNow you have " + totalTasks + " tasks in the list.\n" + DIVIDER);
     }
 
+    /**
+     * Returns a message confirming that a task was deleted.
+     *
+     * @param task The task that was deleted.
+     * @param totalTasks The total number of remaining tasks.
+     * @return The task deleted confirmation message.
+     */
     public String getTaskDeleted(Task task, int totalTasks) {
         return "Noted. I've removed this task:\n  " + task
                 + "\nNow you have " + totalTasks + " tasks in the list.";
@@ -141,6 +183,20 @@ public class Ui {
      */
     public void showError(String errorMessage) {
         System.out.println(DIVIDER + errorMessage + "\n" + DIVIDER);
+    }
+
+    /**
+     * Displays multiple error messages.
+     *
+     * @param errorMessages The error messages to display.
+     */
+    public void showErrors(String... errorMessages) {
+        StringBuilder sb = new StringBuilder(DIVIDER);
+        for (String error : errorMessages) {
+            sb.append(error).append("\n");
+        }
+        sb.append(DIVIDER);
+        System.out.print(sb.toString());
     }
 
     /**
@@ -160,6 +216,12 @@ public class Ui {
         }
     }
 
+    /**
+     * Returns the list of tasks found by search as a formatted string.
+     *
+     * @param tasks The list of found tasks.
+     * @return The formatted found tasks string.
+     */
     public String getFoundTasks(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             return "No matching tasks found.";
@@ -170,5 +232,35 @@ public class Ui {
             }
             return sb.toString().trim();
         }
+    }
+
+    /**
+     * Displays multiple tasks using varargs.
+     *
+     * @param tasks The tasks to display.
+     */
+    public void showTasks(Task... tasks) {
+        System.out.print(DIVIDER + "Tasks:\n");
+        for (int i = 0; i < tasks.length; i++) {
+            System.out.println((i + 1) + ". " + tasks[i]);
+        }
+        System.out.println(DIVIDER);
+    }
+
+    /**
+     * Returns a formatted string of multiple tasks using varargs.
+     *
+     * @param tasks The tasks to format.
+     * @return The formatted string.
+     */
+    public String getTasks(Task... tasks) {
+        if (tasks.length == 0) {
+            return "No tasks.";
+        }
+        StringBuilder sb = new StringBuilder("Tasks:\n");
+        for (int i = 0; i < tasks.length; i++) {
+            sb.append((i + 1)).append(". ").append(tasks[i]).append("\n");
+        }
+        return sb.toString().trim();
     }
 }

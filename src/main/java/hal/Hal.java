@@ -93,6 +93,8 @@ public class Hal {
 
     /**
      * Returns the welcome message.
+     *
+     * @return The welcome message string.
      */
     public String getWelcomeMessage() {
         return ui.getWelcome();
