@@ -1,11 +1,9 @@
 package hal;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.FileNotFoundException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -75,20 +73,16 @@ public class Storage {
 
         Task task = null;
         try {
-            switch (type) {
-            case "T":
+            if (type.equals("T")) {
                 task = new Todo(description);
-                break;
-            case "D":
+            } else if (type.equals("D")) {
                 if (parts.length >= 4) {
                     task = new Deadline(description, LocalDateTime.parse(parts[3]));
                 }
-                break;
-            case "E":
+            } else if (type.equals("E")) {
                 if (parts.length >= 5) {
                     task = new Event(description, LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
                 }
-                break;
             }
         } catch (Exception e) {
             return null;

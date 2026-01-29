@@ -31,6 +31,10 @@ public class Ui {
                 + DIVIDER);
     }
 
+    public String getWelcome() {
+        return "Hello! I'm Hal\nWhat can I do for you?\n";
+    }
+
     /**
      * Displays the input string with dividers.
      *
@@ -47,6 +51,10 @@ public class Ui {
         System.out.println(Ui.DIVIDER + "Bye. Hope to see you again soon!\n" + Ui.DIVIDER);
     }
 
+    public String getGoodbye() {
+        return "Bye. Hope to see you again soon!";
+    }
+
     /**
      * Displays a message confirming that a task was added.
      *
@@ -56,6 +64,11 @@ public class Ui {
     public void showTaskAdded(Task task, int totalTasks) {
         System.out.println(DIVIDER + "Got it. I've added this task:\n  " + task 
                 + "\nNow you have " + totalTasks + " tasks in the list.\n" + DIVIDER);
+    }
+
+    public String getTaskAdded(Task task, int totalTasks) {
+        return "Got it. I've added this task:\n  " + task 
+                + "\nNow you have " + totalTasks + " tasks in the list.";
     }
 
     /**
@@ -71,6 +84,14 @@ public class Ui {
         System.out.println(DIVIDER);
     }
 
+    public String getList(TaskList tasks) {
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.getTaskCount(); i++) {
+            sb.append((i + 1)).append(". ").append(tasks.getTask(i)).append("\n");
+        }
+        return sb.toString().trim();
+    }
+
     /**
      * Displays a message confirming that a task was marked as done.
      *
@@ -78,6 +99,10 @@ public class Ui {
      */
     public void showTaskMarked(Task task) {
         System.out.println(DIVIDER + "Nice! I've marked this task as done:\n  " + task + "\n" + DIVIDER);
+    }
+
+    public String getTaskMarked(Task task) {
+        return "Nice! I've marked this task as done:\n  " + task;
     }
 
     /**
@@ -89,6 +114,10 @@ public class Ui {
         System.out.println(DIVIDER + "OK, I've marked this task as not done yet:\n  " + task + "\n" + DIVIDER);
     }
 
+    public String getTaskUnmarked(Task task) {
+        return "OK, I've marked this task as not done yet:\n  " + task;
+    }
+
     /**
      * Displays a message confirming that a task was deleted.
      *
@@ -98,6 +127,11 @@ public class Ui {
     public void showTaskDeleted(Task task, int totalTasks) {
         System.out.println(DIVIDER + "Noted. I've removed this task:\n  " + task
                 + "\nNow you have " + totalTasks + " tasks in the list.\n" + DIVIDER);
+    }
+
+    public String getTaskDeleted(Task task, int totalTasks) {
+        return "Noted. I've removed this task:\n  " + task
+                + "\nNow you have " + totalTasks + " tasks in the list.";
     }
 
     /**
@@ -123,6 +157,18 @@ public class Ui {
                 System.out.println((i + 1) + ". " + tasks.get(i));
             }
             System.out.println(DIVIDER);
+        }
+    }
+
+    public String getFoundTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            return "No matching tasks found.";
+        } else {
+            StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
+            for (int i = 0; i < tasks.size(); i++) {
+                sb.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
+            }
+            return sb.toString().trim();
         }
     }
 }
