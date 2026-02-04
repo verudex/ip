@@ -43,4 +43,28 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (by: " 
                 + by.format(OUTPUT_FORMATTER).toLowerCase() + ")";
     }
+
+    /**
+     * Checks if this deadline is equal to another deadline.
+     * Two deadlines are equal if they have the same description and deadline time.
+     *
+     * @param obj The object to compare with.
+     * @return True if the deadlines are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof Deadline)) {
+            return false;
+        }
+        Deadline other = (Deadline) obj;
+        return by.equals(other.by);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + by.hashCode();
+    }
 }

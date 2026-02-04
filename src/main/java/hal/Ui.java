@@ -186,6 +186,27 @@ public class Ui {
     }
 
     /**
+     * Displays a duplicate task warning.
+     *
+     * @param task The duplicate task.
+     */
+    public void showDuplicateWarning(Task task) {
+        System.out.println(DIVIDER + "This task already exists in your list:\n  " 
+                + task + "\nTask not added to avoid duplication.\n" + DIVIDER);
+    }
+
+    /**
+     * Returns a duplicate task warning message.
+     *
+     * @param task The duplicate task.
+     * @return The duplicate warning message.
+     */
+    public String getDuplicateWarning(Task task) {
+        return "This task already exists in your list:\n  " 
+                + task + "\nTask not added to avoid duplication.";
+    }
+
+    /**
      * Displays multiple error messages.
      *
      * @param errorMessages The error messages to display.

@@ -151,7 +151,10 @@ public class Parser {
             throw new HalException("Error: Todo description cannot be empty!");
         }
         Task task = new Todo(description);
-        tasks.addTask(task);
+        if (!tasks.addTask(task)) {
+            ui.showDuplicateWarning(task);
+            return;
+        }
         ui.showTaskAdded(task, tasks.getTaskCount());
         storage.save(tasks.getAllTasks());
     }
@@ -175,7 +178,10 @@ public class Parser {
         }
         try {
             Task task = new Deadline(description, by);
-            tasks.addTask(task);
+            if (!tasks.addTask(task)) {
+                ui.showDuplicateWarning(task);
+                return;
+            }
             ui.showTaskAdded(task, tasks.getTaskCount());
             storage.save(tasks.getAllTasks());
         } catch (Exception e) {
@@ -205,7 +211,10 @@ public class Parser {
         }
         try {
             Task task = new Event(description, from, to);
-            tasks.addTask(task);
+            if (!tasks.addTask(task)) {
+                ui.showDuplicateWarning(task);
+                return;
+            }
             ui.showTaskAdded(task, tasks.getTaskCount());
             storage.save(tasks.getAllTasks());
         } catch (Exception e) {

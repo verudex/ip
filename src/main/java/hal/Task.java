@@ -100,4 +100,33 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    /**
+     * Checks if this task is equal to another task.
+     * Two tasks are considered equal if they have the same description and type.
+     *
+     * @param obj The object to compare with.
+     * @return True if the tasks are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Task other = (Task) obj;
+        return description.equalsIgnoreCase(other.description);
+    }
+
+    /**
+     * Returns the hash code for this task.
+     *
+     * @return The hash code based on the description.
+     */
+    @Override
+    public int hashCode() {
+        return description.toLowerCase().hashCode();
+    }
 }
