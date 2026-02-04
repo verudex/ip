@@ -12,6 +12,21 @@ import java.util.Scanner;
  * Handles loading and saving of tasks to a file.
  */
 public class Storage {
+    private static final String TASK_SEPARATOR = " | ";
+    private static final String DONE_MARKER = "1";
+    private static final String TODO_TYPE = "T";
+    private static final String DEADLINE_TYPE = "D";
+    private static final String EVENT_TYPE = "E";
+    private static final int MIN_TASK_PARTS = 3;
+    private static final int DEADLINE_PARTS = 4;
+    private static final int EVENT_PARTS = 5;
+    private static final int TYPE_INDEX = 0;
+    private static final int STATUS_INDEX = 1;
+    private static final int DESCRIPTION_INDEX = 2;
+    private static final int DEADLINE_TIME_INDEX = 3;
+    private static final int EVENT_FROM_INDEX = 3;
+    private static final int EVENT_TO_INDEX = 4;
+    
     private String filePath;
 
     /**
@@ -64,37 +79,39 @@ public class Storage {
     }
 
     private Task parseTask(String line) {
-        String[] parts = line.split(" \\| ");
-        if (parts.length < 3) {
+        String[] parts = line.split(TASK_SEPARATOR);
+        if (parts.length < MIN_TASK_PARTS) {
             return null;
         }
 
-        String type = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String description = parts[2];
+        String type = parts[TYPE_INDEX];
+        boolean isDone = parts[STATUS_INDEX].equals(DONE_MARKER);
+        String description = parts[DESCRIPTION_INDEX];
 
-        Task task = null;
-        try {
-            if (type.equals("T")) {
-                task = new Todo(description);
-            } else if (type.equals("D")) {
-                if (parts.length >= 4) {
-                    task = new Deadline(description, LocalDateTime.parse(parts[3]));
-                }
-            } else if (type.equals("E")) {
-                if (parts.length >= 5) {
-                    task = new Event(description, LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
-                }
-            }
-        } catch (Exception e) {
-            return null;
-        }
+        Task task = createTaskByType(type, parts, description);
 
         if (task != null && isDone) {
             task.markAsDone();
         }
 
         return task;
+    }
+
+    private Task createTaskByType(String type, String[] parts, String description) {
+        try {
+            if (type.equals(TODO_TYPE)) {
+                return new Todo(description);
+            } else if (type.equals(DEADLINE_TYPE) && parts.length >= DEADLINE_PARTS) {
+                return new Deadline(description, LocalDateTime.parse(parts[DEADLINE_TIME_INDEX]));
+            } else if (type.equals(EVENT_TYPE) && parts.length >= EVENT_PARTS) {
+                return new Event(description, 
+                        LocalDateTime.parse(parts[EVENT_FROM_INDEX]), 
+                        LocalDateTime.parse(parts[EVENT_TO_INDEX]));
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
     }
 
     /**

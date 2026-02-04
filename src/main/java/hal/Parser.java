@@ -7,6 +7,20 @@ import java.util.Scanner;
  * Handles parsing and processing of user commands.
  */
 public class Parser {
+    private static final int MARK_COMMAND_LENGTH = 4;
+    private static final int UNMARK_COMMAND_LENGTH = 6;
+    private static final int DELETE_COMMAND_LENGTH = 6;
+    private static final int TODO_COMMAND_LENGTH = 4;
+    private static final int DEADLINE_COMMAND_LENGTH = 8;
+    private static final int EVENT_COMMAND_LENGTH = 5;
+    private static final int FIND_COMMAND_LENGTH = 4;
+    private static final String DEADLINE_SEPARATOR = " /by";
+    private static final String EVENT_FROM_SEPARATOR = " /from";
+    private static final String EVENT_TO_SEPARATOR = " /to";
+    private static final int DEADLINE_SEPARATOR_LENGTH = 4;
+    private static final int EVENT_FROM_SEPARATOR_LENGTH = 6;
+    private static final int EVENT_TO_SEPARATOR_LENGTH = 4;
+    
     private Scanner scanner;
 
     /**
@@ -40,31 +54,30 @@ public class Parser {
         
         if (lowerInput.equals("list")) {
             return Command.LIST;
-        } else if (lowerInput.startsWith("mark")
-                && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
+        } else if (isCommandWithOptionalSpace(lowerInput, "mark", MARK_COMMAND_LENGTH)) {
             return Command.MARK;
-        } else if (lowerInput.startsWith("unmark")
-                && (lowerInput.length() == 6 || lowerInput.charAt(6) == ' ')) {
+        } else if (isCommandWithOptionalSpace(lowerInput, "unmark", UNMARK_COMMAND_LENGTH)) {
             return Command.UNMARK;
-        } else if (lowerInput.startsWith("delete")
-                && (lowerInput.length() == 6 || lowerInput.charAt(6) == ' ')) {
+        } else if (isCommandWithOptionalSpace(lowerInput, "delete", DELETE_COMMAND_LENGTH)) {
             return Command.DELETE;
-        } else if (lowerInput.startsWith("todo")
-                && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
+        } else if (isCommandWithOptionalSpace(lowerInput, "todo", TODO_COMMAND_LENGTH)) {
             return Command.TODO;
-        } else if (lowerInput.startsWith("deadline")
-                && (lowerInput.length() == 8 || lowerInput.charAt(8) == ' ')) {
+        } else if (isCommandWithOptionalSpace(lowerInput, "deadline", DEADLINE_COMMAND_LENGTH)) {
             return Command.DEADLINE;
-        } else if (lowerInput.startsWith("event")
-                && (lowerInput.length() == 5 || lowerInput.charAt(5) == ' ')) {
+        } else if (isCommandWithOptionalSpace(lowerInput, "event", EVENT_COMMAND_LENGTH)) {
             return Command.EVENT;
-        } else if (lowerInput.startsWith("find") && (lowerInput.length() == 4 || lowerInput.charAt(4) == ' ')) {
+        } else if (isCommandWithOptionalSpace(lowerInput, "find", FIND_COMMAND_LENGTH)) {
             return Command.FIND;
         } else if (lowerInput.equals("bye")) {
             return Command.BYE;
         } else {
             return Command.UNKNOWN;
         }
+    }
+
+    private boolean isCommandWithOptionalSpace(String input, String command, int commandLength) {
+        return input.startsWith(command) 
+                && (input.length() == commandLength || input.charAt(commandLength) == ' ');
     }
 
     /**
@@ -109,61 +122,31 @@ public class Parser {
     }
 
     private void handleMarkCommand(String input, TaskList tasks, Ui ui, Storage storage) {
-        String indexStr = input.trim().substring(4).trim();
-        if (indexStr.isEmpty()) {
-            throw new HalException("Error: Task number is required for the mark command!");
-        }
-        try {
-            int taskIndex = Integer.parseInt(indexStr) - 1;
-            if (taskIndex < 0 || taskIndex >= tasks.getTaskCount()) {
-                throw new HalException("Error: Task number is out of range of task list!");
-            }
-            tasks.markTask(taskIndex);
-            ui.showTaskMarked(tasks.getTask(taskIndex));
-            storage.save(tasks.getAllTasks());
-        } catch (NumberFormatException e) {
-            throw new HalException("Error: Invalid task number!");
-        }
+        String indexStr = input.trim().substring(MARK_COMMAND_LENGTH).trim();
+        int taskIndex = parseAndValidateTaskIndex(indexStr, tasks);
+        tasks.markTask(taskIndex);
+        ui.showTaskMarked(tasks.getTask(taskIndex));
+        storage.save(tasks.getAllTasks());
     }
 
     private void handleUnmarkCommand(String input, TaskList tasks, Ui ui, Storage storage) {
-        String indexStr = input.trim().substring(6).trim();
-        if (indexStr.isEmpty()) {
-            throw new HalException("Error: Task number is required for the unmark command!");
-        }
-        try {
-            int taskIndex = Integer.parseInt(indexStr) - 1;
-            if (taskIndex < 0 || taskIndex >= tasks.getTaskCount()) {
-                throw new HalException("Error: Task number is out of range of task list!");
-            }
-            tasks.unmarkTask(taskIndex);
-            ui.showTaskUnmarked(tasks.getTask(taskIndex));
-            storage.save(tasks.getAllTasks());
-        } catch (NumberFormatException e) {
-            throw new HalException("Error: Invalid task number!");
-        }
+        String indexStr = input.trim().substring(UNMARK_COMMAND_LENGTH).trim();
+        int taskIndex = parseAndValidateTaskIndex(indexStr, tasks);
+        tasks.unmarkTask(taskIndex);
+        ui.showTaskUnmarked(tasks.getTask(taskIndex));
+        storage.save(tasks.getAllTasks());
     }
 
     private void handleDeleteCommand(String input, TaskList tasks, Ui ui, Storage storage) {
-        String indexStr = input.trim().substring(6).trim();
-        if (indexStr.isEmpty()) {
-            throw new HalException("Error: Task number is required for the delete command!");
-        }
-        try {
-            int taskIndex = Integer.parseInt(indexStr) - 1;
-            if (taskIndex < 0 || taskIndex >= tasks.getTaskCount()) {
-                throw new HalException("Error: Task number is out of range of task list!");
-            }
-            Task deletedTask = tasks.deleteTask(taskIndex);
-            ui.showTaskDeleted(deletedTask, tasks.getTaskCount());
-            storage.save(tasks.getAllTasks());
-        } catch (NumberFormatException e) {
-            throw new HalException("Error: Invalid task number!");
-        }
+        String indexStr = input.trim().substring(DELETE_COMMAND_LENGTH).trim();
+        int taskIndex = parseAndValidateTaskIndex(indexStr, tasks);
+        Task deletedTask = tasks.deleteTask(taskIndex);
+        ui.showTaskDeleted(deletedTask, tasks.getTaskCount());
+        storage.save(tasks.getAllTasks());
     }
 
     private void handleTodoCommand(String input, TaskList tasks, Ui ui, Storage storage) {
-        String description = input.trim().substring(4).trim();
+        String description = input.trim().substring(TODO_COMMAND_LENGTH).trim();
         if (description.isEmpty()) {
             throw new HalException("Error: Todo description cannot be empty!");
         }
@@ -174,16 +157,16 @@ public class Parser {
     }
 
     private void handleDeadlineCommand(String input, TaskList tasks, Ui ui, Storage storage) {
-        String details = input.trim().substring(8).trim();
+        String details = input.trim().substring(DEADLINE_COMMAND_LENGTH).trim();
         if (details.isEmpty()) {
             throw new HalException("Error: Deadline description cannot be empty!");
         }
-        int byIndex = details.indexOf(" /by");
+        int byIndex = details.indexOf(DEADLINE_SEPARATOR);
         if (byIndex == -1) {
             throw new HalException("Error: Deadline requires /by to be used properly!");
         }
         String description = details.substring(0, byIndex).trim();
-        String by = details.substring(byIndex + 4).trim();
+        String by = details.substring(byIndex + DEADLINE_SEPARATOR_LENGTH).trim();
         if (description.isEmpty()) {
             throw new HalException("Error: Deadline description cannot be empty!");
         }
@@ -202,18 +185,18 @@ public class Parser {
     }
 
     private void handleEventCommand(String input, TaskList tasks, Ui ui, Storage storage) {
-        String details = input.trim().substring(5).trim();
+        String details = input.trim().substring(EVENT_COMMAND_LENGTH).trim();
         if (details.isEmpty()) {
             throw new HalException("Error: Event description cannot be empty!");
         }
-        int fromIndex = details.indexOf(" /from");
-        int toIndex = details.indexOf(" /to");
+        int fromIndex = details.indexOf(EVENT_FROM_SEPARATOR);
+        int toIndex = details.indexOf(EVENT_TO_SEPARATOR);
         if (fromIndex == -1 || toIndex == -1) {
             throw new HalException("Error: Event requires /from and /to to be used properly!");
         }
         String description = details.substring(0, fromIndex).trim();
-        String from = details.substring(fromIndex + 6, toIndex).trim();
-        String to = details.substring(toIndex + 4).trim();
+        String from = details.substring(fromIndex + EVENT_FROM_SEPARATOR_LENGTH, toIndex).trim();
+        String to = details.substring(toIndex + EVENT_TO_SEPARATOR_LENGTH).trim();
         if (description.isEmpty()) {
             throw new HalException("Error: Event description cannot be empty!");
         }
@@ -232,7 +215,7 @@ public class Parser {
     }
 
     private void handleFindCommand(String input, TaskList tasks, Ui ui) {
-        String keyword = input.trim().substring(4).trim();
+        String keyword = input.trim().substring(FIND_COMMAND_LENGTH).trim();
         if (keyword.isEmpty()) {
             throw new HalException("Error: Please provide a keyword to search for!");
         }
@@ -245,5 +228,20 @@ public class Parser {
      */
     public void close() {
         scanner.close();
+    }
+
+    private int parseAndValidateTaskIndex(String indexStr, TaskList tasks) throws HalException {
+        if (indexStr.isEmpty()) {
+            throw new HalException("Error: Task number is required!");
+        }
+        try {
+            int taskIndex = Integer.parseInt(indexStr) - 1;
+            if (taskIndex < 0 || taskIndex >= tasks.getTaskCount()) {
+                throw new HalException("Error: Task number is out of range of task list!");
+            }
+            return taskIndex;
+        } catch (NumberFormatException e) {
+            throw new HalException("Error: Invalid task number!");
+        }
     }
 }
