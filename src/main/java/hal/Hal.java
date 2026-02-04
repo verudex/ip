@@ -26,10 +26,13 @@ public class Hal {
      * @param filePath The path to the storage file.
      */
     public Hal(String filePath) {
+        assert filePath != null : "File path should not be null";
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList();
         parser = new Parser();
+        assert ui != null && storage != null && tasks != null && parser != null 
+                : "All components should be initialized";
         loadTasks();
     }
 
