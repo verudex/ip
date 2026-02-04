@@ -14,6 +14,8 @@ public class Task {
      * @param description The description of the task.
      */
     public Task(String description) {
+        assert description != null : "Task description should not be null";
+        assert !description.trim().isEmpty() : "Task description should not be empty";
         this.description = description;
         this.isDone = false;
         this.taskType = null;
@@ -26,6 +28,9 @@ public class Task {
      * @param taskType The type of the task.
      */
     public Task(String description, TaskType taskType) {
+        assert description != null : "Task description should not be null";
+        assert !description.trim().isEmpty() : "Task description should not be empty";
+        assert taskType != null : "Task type should not be null";
         this.description = description;
         this.isDone = false;
         this.taskType = taskType;
@@ -69,6 +74,7 @@ public class Task {
      * @return The task description.
      */
     public String getDescription() {
+        assert description != null : "Description should not be null";
         return description;
     }
 
