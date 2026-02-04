@@ -19,23 +19,66 @@ public class TaskList {
      * Adds a task to the list.
      *
      * @param task The task to add.
+     * @return True if the task was added, false if it's a duplicate.
      */
-    public void addTask(Task task) {
+    public boolean addTask(Task task) {
         assert task != null : "Task to add should not be null";
+        if (isDuplicate(task)) {
+            return false;
+        }
         tasks.add(task);
+        return true;
+    }
+
+    /**
+     * Checks if a task is a duplicate of an existing task.
+     *
+     * @param task The task to check.
+     * @return True if the task is a duplicate, false otherwise.
+     */
+    public boolean isDuplicate(Task task) {
+        assert task != null : "Task should not be null";
+        for (Task existingTask : tasks) {
+            if (existingTask.equals(task)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Finds duplicate tasks in the list.
+     *
+     * @param task The task to find duplicates of.
+     * @return A list of indices where duplicates exist.
+     */
+    public ArrayList<Integer> findDuplicateIndices(Task task) {
+        assert task != null : "Task should not be null";
+        ArrayList<Integer> duplicateIndices = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).equals(task)) {
+                duplicateIndices.add(i);
+            }
+        }
+        return duplicateIndices;
     }
 
     /**
      * Adds multiple tasks to the list.
      *
      * @param tasksToAdd The tasks to add.
+     * @return The number of tasks successfully added (excluding duplicates).
      */
-    public void addTasks(Task... tasksToAdd) {
+    public int addTasks(Task... tasksToAdd) {
         assert tasksToAdd != null : "Tasks array should not be null";
+        int addedCount = 0;
         for (Task task : tasksToAdd) {
             assert task != null : "Individual task should not be null";
-            tasks.add(task);
+            if (addTask(task)) {
+                addedCount++;
+            }
         }
+        return addedCount;
     }
 
     /**

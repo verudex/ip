@@ -252,7 +252,9 @@ public class Hal {
     }
 
     private String createAndAddTask(Task task) {
-        tasks.addTask(task);
+        if (!tasks.addTask(task)) {
+            return ui.getDuplicateWarning(task);
+        }
         storage.save(tasks.getAllTasks());
         return ui.getTaskAdded(task, tasks.getTaskCount());
     }

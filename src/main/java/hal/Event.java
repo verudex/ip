@@ -49,4 +49,28 @@ public class Event extends Task {
                 + from.format(OUTPUT_FORMATTER).toLowerCase() + " to: " 
                 + to.format(OUTPUT_FORMATTER).toLowerCase() + ")";
     }
+
+    /**
+     * Checks if this event is equal to another event.
+     * Two events are equal if they have the same description, start time, and end time.
+     *
+     * @param obj The object to compare with.
+     * @return True if the events are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof Event)) {
+            return false;
+        }
+        Event other = (Event) obj;
+        return from.equals(other.from) && to.equals(other.to);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + from.hashCode() + to.hashCode();
+    }
 }
