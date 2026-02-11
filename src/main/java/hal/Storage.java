@@ -12,7 +12,7 @@ import java.util.Scanner;
  * Handles loading and saving of tasks to a file.
  */
 public class Storage {
-    private static final String TASK_SEPARATOR = " | ";
+    private static final String TASK_SEPARATOR = " \\| ";
     private static final String DONE_MARKER = "1";
     private static final String TODO_TYPE = "T";
     private static final String DEADLINE_TYPE = "D";

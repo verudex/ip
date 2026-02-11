@@ -1,5 +1,6 @@
 package hal;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 /**
@@ -187,7 +188,7 @@ public class Hal {
         String indexStr = input.trim().substring(MARK_COMMAND_LENGTH).trim();
         int taskIndex = parseAndValidateTaskIndex(indexStr);
         tasks.markTask(taskIndex);
-        storage.save(tasks.getAllTasks());
+        saveTasks();
         return ui.getTaskMarked(tasks.getTask(taskIndex));
     }
 
@@ -195,7 +196,7 @@ public class Hal {
         String indexStr = input.trim().substring(UNMARK_COMMAND_LENGTH).trim();
         int taskIndex = parseAndValidateTaskIndex(indexStr);
         tasks.unmarkTask(taskIndex);
-        storage.save(tasks.getAllTasks());
+        saveTasks();
         return ui.getTaskUnmarked(tasks.getTask(taskIndex));
     }
 
@@ -203,7 +204,7 @@ public class Hal {
         String indexStr = input.trim().substring(DELETE_COMMAND_LENGTH).trim();
         int taskIndex = parseAndValidateTaskIndex(indexStr);
         Task deletedTask = tasks.deleteTask(taskIndex);
-        storage.save(tasks.getAllTasks());
+        saveTasks();
         return ui.getTaskDeleted(deletedTask, tasks.getTaskCount());
     }
 
@@ -213,9 +214,7 @@ public class Hal {
             throw new HalException("Error: Todo description cannot be empty!");
         }
         Task task = new Todo(description);
-        tasks.addTask(task);
-        storage.save(tasks.getAllTasks());
-        return ui.getTaskAdded(task, tasks.getTaskCount());
+        return createAndAddTask(task);
     }
 
     private static final String DEADLINE_SEPARATOR = " /by";
@@ -242,7 +241,11 @@ public class Hal {
             throw new HalException("Error: Deadline time cannot be empty!");
         }
         
-        return createAndAddTask(new Deadline(description, by));
+        try {
+            return createAndAddTask(new Deadline(description, by));
+        } catch (DateTimeParseException e) {
+            throw new HalException("Error: Invalid date format! Please use dd/MM/yyyy HHmm format.\nExample: deadline Submit assignment /by 15/02/2026 2359");
+        }
     }
 
     private void validateNonEmptyDescription(String description, String taskType) {
@@ -255,7 +258,7 @@ public class Hal {
         if (!tasks.addTask(task)) {
             return ui.getDuplicateWarning(task);
         }
-        storage.save(tasks.getAllTasks());
+        saveTasks();
         return ui.getTaskAdded(task, tasks.getTaskCount());
     }
 
@@ -278,7 +281,11 @@ public class Hal {
             throw new HalException("Error: Event time cannot be empty!");
         }
         
-        return createAndAddTask(new Event(description, from, to));
+        try {
+            return createAndAddTask(new Event(description, from, to));
+        } catch (DateTimeParseException e) {
+            throw new HalException("Error: Invalid date format! Please use dd/MM/yyyy HHmm format.\nExample: event Team meeting /from 12/02/2026 1400 /to 12/02/2026 1600");
+        }
     }
 
     private String handleFindCommandForGui(String input) {
