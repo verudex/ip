@@ -38,11 +38,21 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /**
+     * Converts this event to a format suitable for saving to a file.
+     *
+     * @return The file format string.
+     */
     @Override
     public String toFileFormat() {
         return "E | " + super.toFileFormat() + " | " + from + " | " + to;
     }
 
+    /**
+     * Returns a string representation of this event.
+     *
+     * @return A formatted string showing the event type, start time, and end time.
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " 
@@ -69,6 +79,11 @@ public class Event extends Task {
         return from.equals(other.from) && to.equals(other.to);
     }
 
+    /**
+     * Returns the hash code for this event.
+     *
+     * @return The hash code based on the description, start time, and end time.
+     */
     @Override
     public int hashCode() {
         return super.hashCode() + from.hashCode() + to.hashCode();

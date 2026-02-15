@@ -35,7 +35,6 @@ Hal is a **desktop app for managing tasks, optimized for use via a Command Line 
 
 ## Features
 
-> [!NOTE]
 > **Notes about the command format:**
 >
 > * Words in `UPPER_CASE` are the parameters to be supplied by the user.
@@ -70,8 +69,7 @@ Examples:
 * `todo Buy groceries`
 * `todo Call dentist for appointment`
 
-> [!TIP]
-> A todo task can have any description, but it cannot be empty!
+> TIP: A todo task can have any description, but it cannot be empty!
 
 ### Adding a deadline task: `deadline`
 
@@ -172,7 +170,7 @@ There is no need to save manually.
 
 Hal data are saved automatically as a text file `[JAR file location]/data/hal.txt`. Advanced users are welcome to update data directly by editing that data file.
 
-> [!CAUTION]
+> CAUTION:
 > If your changes to the data file makes its format invalid, Hal will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 >
 > Furthermore, certain edits can cause Hal to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.

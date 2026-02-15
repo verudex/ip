@@ -33,11 +33,21 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * Converts this deadline to a format suitable for saving to a file.
+     *
+     * @return The file format string.
+     */
     @Override
     public String toFileFormat() {
         return "D | " + super.toFileFormat() + " | " + by;
     }
 
+    /**
+     * Returns a string representation of this deadline.
+     *
+     * @return A formatted string showing the deadline type and time.
+     */
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " 
@@ -63,6 +73,11 @@ public class Deadline extends Task {
         return by.equals(other.by);
     }
 
+    /**
+     * Returns the hash code for this deadline.
+     *
+     * @return The hash code based on the description and deadline time.
+     */
     @Override
     public int hashCode() {
         return super.hashCode() + by.hashCode();

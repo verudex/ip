@@ -26,12 +26,19 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image halImage = new Image(this.getClass().getResourceAsStream("/images/DaHal.png"));
 
+    /**
+     * Initializes the main window by binding scroll pane properties.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Hal instance */
+    /**
+     * Injects the Hal instance into the controller.
+     *
+     * @param d The Hal instance to use.
+     */
     public void setHal(Hal d) {
         hal = d;
         greet();

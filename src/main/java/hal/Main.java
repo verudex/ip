@@ -15,6 +15,11 @@ public class Main extends Application {
 
     private Hal hal = new Hal();
 
+    /**
+     * Starts the JavaFX application and sets up the main window.
+     *
+     * @param stage The primary stage for the application.
+     */
     @Override
     public void start(Stage stage) {
         try {

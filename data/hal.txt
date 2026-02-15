@@ -3,4 +3,3 @@ D | 0 | Submit assignment | 2026-02-15T23:59
 T | 0 | Buy groceries
 E | 1 | Team meeting | 2026-02-12T14:00 | 2026-02-12T16:00
 T | 0 | Read a book
-T | 0 | Go out with friends

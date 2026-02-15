@@ -63,7 +63,7 @@ public class Hal {
     }
 
     /**
-     * Runs the main application loop.
+     * Runs the main application loop for CLI mode.
      */
     public void run() {
         ui.showWelcome();
@@ -85,6 +85,11 @@ public class Hal {
         parser.close();
     }
 
+    /**
+     * The main entry point for the application.
+     *
+     * @param args Command line arguments. If provided, the first argument is used as the file path.
+     */
     public static void main(String[] args) {
         String filePath = args.length > 0 ? args[0] : DEFAULT_FILE_PATH;
         new Hal(filePath).run();
@@ -92,6 +97,9 @@ public class Hal {
 
     /**
      * Generates a response for the user's chat message.
+     *
+     * @param input The user's input string.
+     * @return The response message to display.
      */
     public String getResponse(String input) {
         if (parser.isExit(input)) {
